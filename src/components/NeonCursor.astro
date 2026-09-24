@@ -1,0 +1,75 @@
+---
+// Círculo neón que sigue al ratón.
+// Cambia el color con la prop: <NeonCursor color="#ff2bd6" />
+const { color = '#9333ea' } = Astro.props;
+---
+<div class="neon-cursor" aria-hidden="true" style={`--neon: ${color}`}></div>
+
+<style>
+  .neon-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;   /* centra el círculo en la punta del ratón */
+    border: 2px solid var(--neon);
+    border-radius: 50%;
+    /* Relleno: sube el % para hacerlo más opaco (100% = sólido) */
+    background: color-mix(in srgb, var(--neon) 45%, transparent);
+    box-shadow:
+      0 0 6px var(--neon),
+      0 0 16px color-mix(in srgb, var(--neon) 60%, transparent),
+      inset 0 0 6px color-mix(in srgb, var(--neon) 50%, transparent);
+    pointer-events: none;      /* no bloquea clics */
+    z-index: 9999;
+    opacity: 0;
+    transition: width .2s, height .2s, margin .2s, opacity .2s, background .2s;
+  }
+  .neon-cursor.visible { opacity: 1; }
+  .neon-cursor.hover {
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    background: color-mix(in srgb, var(--neon) 30%, transparent);
+  }
+
+  /* En móvil/tablet no hay ratón: se oculta */
+  @media (hover: none), (pointer: coarse) {
+    .neon-cursor { display: none; }
+  }
+</style>
+
+<script>
+  const cursor = document.querySelector<HTMLElement>('.neon-cursor');
+  const soloPuntero = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (cursor && soloPuntero) {
+    let mx = 0, my = 0;   // posición real del ratón
+    let cx = 0, cy = 0;   // posición del círculo (va con retraso)
+    const suavizado = reducirMovimiento ? 1 : 0.2;
+
+    window.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.classList.add('visible');
+    });
+
+    document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+
+    // Se agranda al pasar por enlaces y botones
+    document.addEventListener('mouseover', (e) => {
+      const t = e.target as Element;
+      cursor.classList.toggle('hover', !!t.closest('a, button'));
+    });
+
+    function animar() {
+      cx += (mx - cx) * suavizado;
+      cy += (my - cy) * suavizado;
+      cursor!.style.transform = `translate(${cx}px, ${cy}px)`;
+      requestAnimationFrame(animar);
+    }
+    animar();
+  }
+</script>

@@ -1,0 +1,44 @@
+---
+const { nombre, url, icono } = Astro.props;
+---
+<a href={url} class="link-btn" target="_blank" rel="noopener noreferrer">
+  <span class="icono">{icono}</span>
+  <span>{nombre}</span>
+</a>
+
+<style>
+  .link-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    aspect-ratio: 1 / 1;
+    padding: 1rem;
+    background: #fff;
+    color: var(--morado-oscuro);
+    border: 2px solid var(--morado);
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow:
+      0 0 6px rgba(147, 51, 234, 0.45),
+      0 0 16px rgba(147, 51, 234, 0.25),
+      inset 0 0 6px rgba(147, 51, 234, 0.15);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .link-btn:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 8px rgba(147, 51, 234, 0.7),
+      0 0 24px rgba(147, 51, 234, 0.45),
+      inset 0 0 10px rgba(147, 51, 234, 0.25);
+  }
+  .link-btn:focus-visible {
+    outline: 3px solid var(--morado-claro);
+    outline-offset: 3px;
+  }
+  .icono {
+    font-size: 2rem;
+  }
+</style>

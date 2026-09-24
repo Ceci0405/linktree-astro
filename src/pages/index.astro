@@ -1,0 +1,68 @@
+---
+import LinkButton from '../components/LinkButton.astro';
+import NeonCursor from '../components/NeonCursor.astro';
+import { perfil, enlaces } from '../data/links.js';
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{perfil.nombre} · Enlaces</title>
+  </head>
+  <body>
+    <NeonCursor color="#9333ea" />
+    <main>
+      <img src={perfil.avatar} alt={perfil.nombre} class="avatar" onerror="this.style.display='none'" />
+      <h1>{perfil.nombre}</h1>
+      <p class="bio">{perfil.bio}</p>
+
+      <div class="enlaces">
+        {enlaces.map((enlace) => (
+          <LinkButton nombre={enlace.nombre} url={enlace.url} icono={enlace.icono} />
+        ))}
+      </div>
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --morado: #7c3aed;
+    --morado-oscuro: #5b21b6;
+    --morado-claro: #ede9fe;
+    --texto: #2e1065;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(180deg, #ffffff 0%, #faf5ff 100%);
+    color: var(--texto);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 3rem 1rem;
+  }
+  main {
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--morado);
+    box-shadow: 0 0 0 4px var(--morado-claro);
+  }
+  h1 { margin: 0 0 0.25rem; font-size: 1.4rem; color: var(--morado-oscuro); }
+  .bio { color: #6b5b95; margin-bottom: 2rem; font-size: 0.95rem; }
+  .enlaces {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  ::selection { background: var(--morado); color: #fff; }
+</style>
