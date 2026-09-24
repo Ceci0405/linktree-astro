@@ -10,7 +10,7 @@ export const enlaces = [
   { nombre: "YouTube", url: "https://www.youtube.com/@Ceci.405", icono: "▶️" },
   { nombre: "Discord", url: "https://discord.gg/VtfzeRqny", icono: "👾" },
   { nombre: "Instagram", url: "https://instagram.com/tu_usuario", icono: "📸" },
-  { nombre: "TikTok", url: "https://www.tiktok.com/@ceci.0405", icono: "🎵" },
+  { nombre: "TikTok", url: "https://tiktok.com/@cecii405_", icono: "🎵" },
   { nombre: "GitHub", url: "https://github.com/Ceci0405", icono: "💻" },
   { nombre: "Portfolio", url: "https://ceci0405.github.io/portfolio", icono: "🌐" }
 ];

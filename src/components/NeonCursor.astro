@@ -3,7 +3,7 @@
 // Cambia el color con la prop: <NeonCursor color="#ff2bd6" />
 const { color = '#9333ea' } = Astro.props;
 ---
-<div class="neon-cursor" aria-hidden="true" style={`--neon: ${color}`}></div>
+<div class="neon-cursor" aria-hidden="true" data-color={color}></div>
 
 <style>
   .neon-cursor {
@@ -44,6 +44,9 @@ const { color = '#9333ea' } = Astro.props;
   const cursor = document.querySelector<HTMLElement>('.neon-cursor');
   const soloPuntero = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const reducirMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // El color se aplica por JS (no con style="") para cumplir la CSP
+  if (cursor?.dataset.color) cursor.style.setProperty('--neon', cursor.dataset.color);
 
   if (cursor && soloPuntero) {
     let mx = 0, my = 0;   // posición real del ratón
