@@ -1,6 +1,7 @@
 ---
 import LinkButton from '../components/LinkButton.astro';
 import NeonCursor from '../components/NeonCursor.astro';
+import Analytics from '@vercel/analytics/astro';
 import { perfil, enlaces } from '../data/links.js';
 ---
 <html lang="es">
@@ -22,6 +23,7 @@ import { perfil, enlaces } from '../data/links.js';
         ))}
       </div>
     </main>
+    <Analytics />
   </body>
 </html>
 
